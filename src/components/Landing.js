@@ -5,7 +5,7 @@ function Landing() {
     <div>
       <h1>A.I. Mental Health Coach</h1>
       <p>What kind of personality would you like me to have?</p>
-      <input size={60}></input>
+      <input size={50}></input>
     </div>
   );
 }

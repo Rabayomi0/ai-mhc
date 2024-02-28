@@ -1,17 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App.js";
+// import openai from "./components/openai-test";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// async function main() {
+//   const chatCompletion = await openai.chat.completions.create({
+//     messages: [
+//       {
+//         role: "system",
+//         content:
+//           "You are a sarcastic, but well meaning mental health advocate.",
+//       },
+//     ],
+//     model: "gpt-3.5-turbo",
+//   });
+//   console.log(chatCompletion.choices[0]);
+// }
+
+// main();
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

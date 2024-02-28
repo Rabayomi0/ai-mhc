@@ -1,10 +1,16 @@
 import React from "react";
+import "./Landing.css";
 
 function Landing() {
   return (
     <div>
       <h1>A.I. Mental Health Coach</h1>
-      <p>What kind of personality would you like me to have?</p>
+      <div className="animation-text">
+        <p>
+          What kind of personality would you like me to have?{" "}
+          <span className="type"></span>
+        </p>
+      </div>
       <input size={50}></input>
     </div>
   );

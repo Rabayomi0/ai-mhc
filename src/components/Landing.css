@@ -1,0 +1,78 @@
+.animation-text .type {
+  position: relative;
+}
+
+.animation-text .type::before {
+  content: "Gentle?";
+  color: orange;
+  overflow: hidden;
+  animation: words 20s infinite;
+}
+
+.animation-text .type::after {
+  content: "";
+  position: absolute;
+  width: calc(100% + 8px);
+  height: 100%;
+  border-left: 2px solid orange;
+  animation: blink 0.8s infinite alternate;
+  /* animation: typing 20s steps(14) infinite; */
+}
+
+@keyframes blink {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes words {
+  0%,
+  20% {
+    content: "Gentle?";
+  }
+  21%,
+  40% {
+    content: "Stern?";
+  }
+  41%,
+  60% {
+    content: "Playful?";
+  }
+  61%,
+  80% {
+    content: "Blunt?";
+  }
+  81%,
+  100% {
+    content: "Shy?";
+  }
+}
+
+@keyframes typing {
+  10%,
+  15%,
+  30%,
+  35%,
+  50%,
+  55%,
+  70%,
+  75%,
+  90%,
+  95% {
+    width: 0%;
+  }
+  5%,
+  20%,
+  25%,
+  40%,
+  45%,
+  60%,
+  65%,
+  80%,
+  85% {
+    width: calc(100% + 8px);
+  }
+}

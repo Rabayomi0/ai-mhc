@@ -1,5 +1,14 @@
+.landing-page{
+  background-color: rgb(43, 67, 67);
+  height: 100vh;
+}
+
 .animation-text .type {
   position: relative;
+}
+
+.animation-text{
+  color: aliceblue;
 }
 
 .animation-text .type::before {

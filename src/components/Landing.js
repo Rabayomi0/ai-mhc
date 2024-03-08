@@ -3,8 +3,8 @@ import "./Landing.css";
 
 function Landing() {
   return (
-    <div>
-      <h1>A.I. Mental Health Coach</h1>
+    <div className="landing-page">
+      <h1 style={{color: "aliceblue"}}>A.I. Mental Health Coach</h1>
       <div className="animation-text">
         <p>
           What kind of personality would you like me to have?{" "}

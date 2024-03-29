@@ -1,17 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Landing.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import EnterName from "./EnterName";
+import App from "../App";
 
 function Landing() {
+  const [Name, setName] = useState("");
+  const handleChange = (props) => {
+    setName(props.target.value);
+  };
+
+  // const nav = useNavigate();
+  const handleSubmit = (event) => {
+    alert("You entered your name: " + Name);
+    event.preventDefault();
+    // nav(<App />);
+  };
+
   return (
     <div className="landing-page">
-      <h1 style={{color: "aliceblue"}}>A.I. Mental Health Coach</h1>
-      <div className="animation-text">
-        <p>
-          What kind of personality would you like me to have?{" "}
-          <span className="type"></span>
+      <div className="block-page">
+        <h1
+          style={{
+            color: "aliceblue",
+            margin: "0px",
+            padding: "5px",
+            fontSize: "50px",
+          }}
+        >
+          A.I. Mental Health Coach
+        </h1>
+        <p style={{ color: "aliceblue", fontSize: "20px" }}>
+          What is your name?
         </p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            size={50}
+            value={Name}
+            onChange={handleChange}
+          ></input>
+          <button type="submit">Enter</button>
+          <h2>
+            Your name is <EnterName n={Name} />{" "}
+          </h2>
+        </form>
       </div>
-      <input size={50}></input>
     </div>
   );
 }

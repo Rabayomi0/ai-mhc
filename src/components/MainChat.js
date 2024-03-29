@@ -1,5 +1,5 @@
-import "./App.css";
-import "./components/Landing.js";
+import "./MainChat.css";
+import "./Landing.js";
 import { useEffect, useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -11,9 +11,10 @@ import {
   TypingIndicator,
   Avatar,
 } from "@chatscope/chat-ui-kit-react";
-import Landing from "./components/Landing.js";
+import Landing from "./Landing.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+function MainChat() {
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
   const [messages, setMessages] = useState([
     {
@@ -128,7 +129,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="main-chat">
       {homePage ? (
         <Landing />
       ) : (
@@ -178,4 +179,4 @@ function App() {
     </div>
   );
 }
-export default App;
+export default MainChat;

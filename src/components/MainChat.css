@@ -1,0 +1,8 @@
+.main-chat {
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 1) 34%,
+    rgba(41, 136, 163, 1) 92%,
+    rgba(86, 195, 223, 1) 100%
+  );
+}

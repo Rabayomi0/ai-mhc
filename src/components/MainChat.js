@@ -11,8 +11,17 @@ import {
   TypingIndicator,
   Avatar,
 } from "@chatscope/chat-ui-kit-react";
-import Landing from "./Landing.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function makeName() {
+  const json = localStorage.getItem("form");
+  const obj = JSON.parse(json);
+
+  var t = "";
+  for (const key in obj) {
+    t = `${obj[key]}`;
+  }
+  return t;
+}
 
 function MainChat() {
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
@@ -27,7 +36,21 @@ function MainChat() {
   ]);
 
   async function introMessage() {
-    await fetch("http://localhost:8000/api/introduce")
+    const apiRequestName = {
+      introduction:
+        "Introduce yourself to me as we're meeting for the first time. My name is " +
+        makeName() +
+        ".",
+    };
+
+    await fetch("http://localhost:8000/introduce", {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer" + API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(apiRequestName),
+    })
       .then((response) => response.json())
       .then((intro) => {
         setMessages([
@@ -38,9 +61,6 @@ function MainChat() {
         ]);
       });
   }
-
-  const [homePage, isHomePage] = useState(true);
-
   // UseState for "typing message"
   const [typing, setTyping] = useState(false);
 
@@ -67,7 +87,7 @@ function MainChat() {
     await processMessage(newMessages);
   };
 
-  // console.log(messages);
+  console.log(messages);
 
   // process message to ChatGPT
 
@@ -95,16 +115,20 @@ function MainChat() {
     }
 
     const apiRequestBody = {
-      prompt: loop(), // TODO: Find a way to iterate through [message1, message2, message3]
+      prompt: loop(),
+      person: makeName(),
     };
 
-    // get response from the server, which communicated with ChatGPT
+    // send message to be processed by backend server
     await fetch("http://localhost:8000/api", {
       method: "POST",
       headers: {
         Authorization: "Bearer" + API_KEY,
         "Content-Type": "application/json",
       },
+
+      // message to be sent
+
       body: JSON.stringify(apiRequestBody),
     })
       .then((response) => {
@@ -130,52 +154,45 @@ function MainChat() {
 
   return (
     <div className="main-chat">
-      {homePage ? (
-        <Landing />
-      ) : (
-        <div
-          className="main"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            position: "relative",
-            height: "100vh",
-            width: "100%",
-            backgroundColor: "orange",
-          }}
-        >
-          <MainContainer style={{ width: "50vw" }}>
-            <ChatContainer>
-              <MessageList
-                typingIndicator={
-                  typing ? (
-                    <TypingIndicator content="ChatGPT is typing..." />
-                  ) : (
-                    ""
-                  )
-                }
-              >
-                {messages.map((message, i) => {
-                  return (
-                    <Message
-                      key={i}
-                      model={message}
-                      style={{ maxWidth: "250px" }}
-                    >
-                      <Avatar src="Misfit.jpg"></Avatar>
-                    </Message>
-                  );
-                })}
-              </MessageList>
-              <MessageInput
-                placeholder="Type message here"
-                onSend={handleSend}
-              />
-            </ChatContainer>
-          </MainContainer>
-        </div>
-      )}
+      <div
+        className="main"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          position: "relative",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <MainContainer style={{ width: "45vw" }}>
+          <ChatContainer>
+            <MessageList
+              typingIndicator={
+                typing ? <TypingIndicator content="ChatGPT is typing..." /> : ""
+              }
+            >
+              {messages.map((message, i) => {
+                return (
+                  <Message
+                    key={i}
+                    model={message}
+                    style={{ maxWidth: "250px" }}
+                  >
+                    <Avatar src="Misfit.jpg"></Avatar>
+                  </Message>
+                );
+              })}
+            </MessageList>
+            <MessageInput
+              placeholder="Type message here"
+              autoFocus
+              attachButton={false}
+              onSend={handleSend}
+            />
+          </ChatContainer>
+        </MainContainer>
+      </div>
     </div>
   );
 }

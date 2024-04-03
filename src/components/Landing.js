@@ -1,9 +1,5 @@
-import React, { useEffect } from "react";
 import "./Landing.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import EnterName from "./EnterName";
-import App from "../App";
 
 function Landing() {
   const [Name, setName] = useState("");
@@ -11,40 +7,37 @@ function Landing() {
     setName(props.target.value);
   };
 
-  // const nav = useNavigate();
-  const handleSubmit = (event) => {
-    alert("You entered your name: " + Name);
-    event.preventDefault();
-    // nav(<App />);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const fd = new FormData(document.querySelector("form"));
+    const obj = Object.fromEntries(fd);
+
+    const json = JSON.stringify(obj);
+    localStorage.setItem("form", json);
+    window.location.href = "/mainchat";
   };
 
   return (
     <div className="landing-page">
+      <h1 className="bigText">A.I. Mental Health Coach</h1>
       <div className="block-page">
-        <h1
-          style={{
-            color: "aliceblue",
-            margin: "0px",
-            padding: "5px",
-            fontSize: "50px",
-          }}
-        >
-          A.I. Mental Health Coach
-        </h1>
-        <p style={{ color: "aliceblue", fontSize: "20px" }}>
-          What is your name?
-        </p>
+        <p style={{ color: "aliceblue" }}>What is your name?</p>
         <form onSubmit={handleSubmit}>
           <input
+            className="input-box"
             type="text"
             size={50}
             value={Name}
+            name="User"
             onChange={handleChange}
           ></input>
-          <button type="submit">Enter</button>
-          <h2>
-            Your name is <EnterName n={Name} />{" "}
-          </h2>
+          <button
+            className="input-button"
+            type="submit"
+            style={{ padding: "10px" }}
+          >
+            Enter
+          </button>
         </form>
       </div>
     </div>

@@ -11,17 +11,18 @@ function Landing() {
     e.preventDefault();
     const fd = new FormData(document.querySelector("form"));
     const obj = Object.fromEntries(fd);
-
     const json = JSON.stringify(obj);
     localStorage.setItem("form", json);
-    window.location.href = "/mainchat";
+    window.location.href = "/selectperson";
   };
 
   return (
     <div className="landing-page">
       <h1 className="bigText">A.I. Mental Health Coach</h1>
       <div className="block-page">
-        <p style={{ color: "aliceblue" }}>What is your name?</p>
+        <p style={{ color: "aliceblue" }}>
+          What is your <span style={{ color: "lightblue" }}>name</span>?
+        </p>
         <form onSubmit={handleSubmit}>
           <input
             className="input-box"

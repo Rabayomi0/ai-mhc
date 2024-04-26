@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainChat from "./components/MainChat";
 import Landing from "./components/Landing";
+import SelectPerson from "./components/SelectPerson";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/mainchat" element={<MainChat />} />
+          <Route path="/selectperson" element={<SelectPerson />} />
         </Routes>
       </BrowserRouter>
     </div>

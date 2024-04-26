@@ -1,7 +1,7 @@
 import "./MainChat.css";
 import "./Landing.js";
 import { useEffect, useState } from "react";
-import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import "../css/main.scss";
 import {
   MainContainer,
   ChatContainer,
@@ -11,6 +11,8 @@ import {
   TypingIndicator,
   Avatar,
 } from "@chatscope/chat-ui-kit-react";
+import Button from "react-bootstrap/Button";
+import "pixel-borders/docs/styles/pixel-borders.css";
 
 function makeName() {
   const json = localStorage.getItem("form");
@@ -29,40 +31,57 @@ function MainChat() {
     {
       // initial useState
       message: useEffect(() => {
+        async function introMessage() {
+          const apiRequestName = {
+            introduction:
+              "Introduce yourself to me as if we were meeting for the first time. My name is " +
+              makeName() +
+              ".",
+          };
+
+          await fetch("http://localhost:8000/api", {
+            method: "PUT",
+            headers: {
+              Authorization: "Bearer" + API_KEY,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(apiRequestName),
+          })
+            .then((response) => response.json())
+            .then((intro) => {
+              setMessages([
+                {
+                  message: intro.message[0].message.content,
+                  sender: "A.I. MHC",
+                },
+              ]);
+            });
+        }
         introMessage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []),
       sender: "A.I. MHC",
     },
   ]);
 
-  async function introMessage() {
-    const apiRequestName = {
-      introduction:
-        "Introduce yourself to me as we're meeting for the first time. My name is " +
-        makeName() +
-        ".",
-    };
-
-    await fetch("http://localhost:8000/introduce", {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer" + API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(apiRequestName),
-    })
-      .then((response) => response.json())
-      .then((intro) => {
-        setMessages([
-          {
-            message: intro.message[0].message.content,
-            sender: "A.I. MHC",
-          },
-        ]);
-      });
-  }
   // UseState for "typing message"
   const [typing, setTyping] = useState(false);
+
+  const resetChat = async () => {
+    setMessages([]);
+
+    async function emptyMessages() {
+      await fetch("http://localhost:8000/api", {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer" + API_KEY,
+          "Content-Type": "application/json",
+        },
+      }).then((response) => console.log(response.json));
+    }
+    emptyMessages();
+    window.location.href = "/";
+  };
 
   const handleSend = async (message) => {
     // when a message gets sent...create message object
@@ -81,13 +100,13 @@ function MainChat() {
 
     setTimeout(() => {
       setTyping(true);
-    }, "2000");
+    }, "3000");
 
     // take sent message and apply it to async processing message
     await processMessage(newMessages);
   };
 
-  console.log(messages);
+  // console.log(messages);
 
   // process message to ChatGPT
 
@@ -108,6 +127,7 @@ function MainChat() {
 
     function loop() {
       var n = "";
+      //loops through all apiMessages and eventually returns latest message
       for (const info in apiMessages) {
         n = apiMessages[info].content;
       }
@@ -116,7 +136,6 @@ function MainChat() {
 
     const apiRequestBody = {
       prompt: loop(),
-      person: makeName(),
     };
 
     // send message to be processed by backend server
@@ -148,28 +167,33 @@ function MainChat() {
             },
           ]);
           setTyping(false);
-        }, "3000");
+        }, "4000");
       });
   }
 
+  console.log(messages);
   return (
     <div className="main-chat">
+      <Button className="btn-back" variant="primary" onClick={resetChat}>
+        Reset
+      </Button>
+      <img src="Lux.png" className="ava" alt="Lux the therapist" />
       <div
         className="main"
         style={{
           display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
+          float: "right",
+          alignItems: "center",
           position: "relative",
           height: "100vh",
-          width: "100%",
+          width: "60%",
         }}
       >
-        <MainContainer style={{ width: "45vw" }}>
+        <MainContainer style={{ width: "60vw", height: "100vh" }}>
           <ChatContainer>
             <MessageList
               typingIndicator={
-                typing ? <TypingIndicator content="ChatGPT is typing..." /> : ""
+                typing ? <TypingIndicator content="Lux is typing..." /> : ""
               }
             >
               {messages.map((message, i) => {
@@ -177,9 +201,13 @@ function MainChat() {
                   <Message
                     key={i}
                     model={message}
-                    style={{ maxWidth: "250px" }}
+                    style={{ maxWidth: "60%", padding: "30px" }}
                   >
-                    <Avatar src="Misfit.jpg"></Avatar>
+                    {message.sender === "A.I. MHC" ? (
+                      <Avatar src="Luxpfp.png"></Avatar>
+                    ) : (
+                      ""
+                    )}
                   </Message>
                 );
               })}

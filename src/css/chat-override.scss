@@ -1,0 +1,17 @@
+@import "@chatscope/chat-ui-kit-styles/themes/default/_variables.scss";
+
+$message-list-bg-color: rgb(113, 74, 137);
+$message-content-bg-color: rgb(85, 16, 97); // bg color for incoming message
+$message-content-color: white; // text color for incoming message
+$message-content-outgoing-color: white; // text color for outgoing message
+$message-content-outgoing-bg-color: rgb(
+  28,
+  113,
+  187
+); // bg color for outgoing message
+$message-content-font-family: "gameovercre";
+$message-content-font-size: 18px;
+$message-input-content-editor-font-family: "Press Start 2P";
+$message-list-typing-indicator-bg-color: "Transparent";
+$typing-indicator-font-family: "gameovercre";
+$typing-indicator-text-color: rgb(82, 217, 255);

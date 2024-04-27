@@ -17,7 +17,6 @@ import "pixel-borders/docs/styles/pixel-borders.css";
 function makeName() {
   const json = localStorage.getItem("form");
   const obj = JSON.parse(json);
-
   var t = "";
   for (const key in obj) {
     t = `${obj[key]}`;
@@ -26,6 +25,14 @@ function makeName() {
 }
 
 function MainChat() {
+  // character image
+  const charPortrait = localStorage.getItem("image");
+
+  // character personality
+
+  // TODO: use this to specify Lux's behavior
+  const personality = localStorage.getItem("character");
+
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
   const [messages, setMessages] = useState([
     {
@@ -33,6 +40,7 @@ function MainChat() {
       message: useEffect(() => {
         async function introMessage() {
           const apiRequestName = {
+            character: personality,
             introduction:
               "Introduce yourself to me as if we were meeting for the first time. My name is " +
               makeName() +
@@ -177,7 +185,7 @@ function MainChat() {
       <Button className="btn-back" variant="primary" onClick={resetChat}>
         Reset
       </Button>
-      <img src="Lux.png" className="ava" alt="Lux the therapist" />
+      <img src= {charPortrait} className="ava" alt="Lux the therapist" />
       <div
         className="main"
         style={{

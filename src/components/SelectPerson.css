@@ -10,35 +10,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  h1 {
-    margin: 2.5pc;
-    font-family: "Press Start 2P";
-    font-size: 28px;
-  }
 }
 
-.selection {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  height: 95%;
-
-  div {
-    width: 100%;
-    padding: 5px;
-    background-color: rgb(23, 35, 46);
-    border: 1px solid aliceblue;
-    transition: 0.5s;
-  }
-
-  :hover {
-    background-color: rgb(103, 197, 255);
-  }
-
-  h1 {
-    background-color: transparent;
-    color: aliceblue;
-    font-size: 22px;
-  }
+.main-container h1 {
+  margin: 2.5pc;
+  font-family: "Press Start 2P";
 }
